@@ -1,5 +1,3 @@
-import cv2
-import time
 import matplotlib.pyplot as plt
 
 for i in range(1, 112):
@@ -10,11 +8,7 @@ for i in range(1, 112):
         filename = '0' + filename + '.png'
     if len(filename) == 3:
         filename = filename + '.png'
-    #print filename
-    img = cv2.imread(filename)
-    #print img
-    #print type(img)
-    #print img.shape
+    img = plt.imread(filename)
     plt.imshow(img)
-    plt.show()
-    time.sleep(0.03)
+    plt.show(block=False)
+    plt.pause(0.02)
