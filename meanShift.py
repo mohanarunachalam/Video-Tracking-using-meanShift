@@ -5,15 +5,11 @@ import os
 
 def ReadImage(i):
     filename = str(i)
-    if len(filename) == 1:
-        filename = '00' + filename + '.png'
-    if len(filename) == 2:
-        filename = '0' + filename + '.png'
-    if len(filename) == 3:
-        filename = filename + '.png'
+    filename = filename.zfill(3)
+    filename = filename + '.png'
     img = cv2.imread(filename)
     return img
-def RunInstance(directory = None, r = 90,h = 36,c = 282,w = 22):
+def RunInstance(directory = None, r = 90,h = 38,c = 282,w = 26):
     print r, h, c, w, directory
     frame = cv2.imread('001.png')
     if directory and not os.path.exists(directory):
@@ -29,7 +25,7 @@ def RunInstance(directory = None, r = 90,h = 36,c = 282,w = 22):
     cv2.normalize(roi_hist,roi_hist,0,255,cv2.NORM_MINMAX)
     # Setup the termination criteria, either 10 iteration or move by atleast 1 pt
     term_crit = ( cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 1 )
-    for i in range(1, 112):
+    for i in range(1, 113):
         frame = ReadImage(i)
         hsv = frame
         #hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #***
@@ -45,9 +41,9 @@ def RunInstance(directory = None, r = 90,h = 36,c = 282,w = 22):
             break
         else:
             if directory:
-                cv2.imwrite(directory + '/meanShift' + str(i)+".jpg",img2)
+                cv2.imwrite(directory + '/meanShift' + str(i).zfill(3) + ".jpg", img2)
                 if i == 1:
-                    cv2.imwrite(directory + '/meanShift' + str(i) + ' r' + str(r) + 'h' + str(h) + ' c' + str(c) + 'w' + str(w) +".jpg", img2)
+                    cv2.imwrite(directory + '/meanShift' + str(i).zfill(3) + ' r' + str(r) + 'h' + str(h) + ' c' + str(c) + 'w' + str(w) +".jpg", img2)
         cv2.destroyAllWindows()
 
 def RunCycle():
@@ -58,5 +54,5 @@ def RunCycle():
                     directory = 'RGB r' + str(r) + ' h' + str(h) + ' c' + str(c) + ' w' + str(w)
                     RunInstance(directory, r, h, c, w)
 
-RunCycle()
-#RunInstance('RGB try4')
+#RunCycle()
+RunInstance('RGB try')
